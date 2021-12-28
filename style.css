@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
+p{
+    font-family: Oswald, Arial;
+}
+
+body{
+    background-color: #abdbe3;
+}
+#position{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#position>button{
+    padding:2em;
+    font-size:150%;;
+}
+#results{
+    text-align: center;
+    font-size:150%;;
+}
