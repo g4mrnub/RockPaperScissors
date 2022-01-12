@@ -3,6 +3,10 @@
     var losses = 0;
     var round = 1;
 
+    const playAgain = document.querySelector(".play-popup");
+    const bgOverlay = document.querySelector(".bg-overlay");
+    const popupText = document.querySelector(".popup-text");
+
     const resultsContainer = document.querySelector('#results');
     const roundResults = document.createElement('p');
     const score = document.createElement('p');
@@ -32,6 +36,7 @@
     //   if Scissots, 
     //     scissors beats paper
     //     scissors loses to rock
+
     function playRound(playerSelection, computerSelection){
         if(playerSelection == computerSelection){
             //recursively ask player to play again until results are different
@@ -75,7 +80,15 @@
     //plays 5 rounds of rock paper scissors
     function scoreboard(maxGames){
         if(round >= maxGames){
-            score.textContent = outputResult(wins, losses);
+            //display popup
+            playAgain.classList.toggle("none");
+            bgOverlay.classList.toggle("none");
+            playAgain.classList.toggle("play-popup-fade");
+            overlay.classList.toggle("bg-overlay-fade");
+            popupText.textContent = outputResult(wins, losses);
+            score.textContent = "";
+            roundResults.textContent = "";
+            
             //reset score
             wins = 0;
             losses = 0;
@@ -94,19 +107,31 @@
         return playerChoice.toLocaleLowerCase();
     }
 
-    const buttons = document.querySelectorAll('button');
+    const buttons = document.querySelectorAll('#position > button');
     buttons.forEach(button => button.addEventListener('click', function(){
         playRound(askPlayer(button), computerPlay())}));
+
+    const button = document.querySelector(".play-popup > button");
+    const overlay = document.querySelector(".bg-overlay");
+    button.addEventListener("click", (event) => {
+        event.preventDefault(); //prevents page refresh which undoes the hiding
+        playAgain.classList.toggle("play-popup-fade");
+        overlay.classList.toggle("bg-overlay-fade");
+      });
+    overlay.addEventListener("transitionend", () => {
+        playAgain.classList.toggle("none");
+        overlay.classList.toggle("none");
+    });
 
     // output winner
     function outputResult(wins, losses){
         var result;
             if(wins > losses){
-                result = "YOU FUCKIN WIN DUDE";
+                result = "YOU WIN DUDE";
             }else if(wins == losses){
-                result = "lmao";
+                result = "TIE";
             }else{
-                result = "YOU LOSE. EAT MY ASS DUDE";
+                result = "YOU LOSE";
             }
             return result;
         }
